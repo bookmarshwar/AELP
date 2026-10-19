@@ -5,12 +5,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import com.folk.aelp.integration.LPVirtualItemSupport;
+
 import appeng.api.config.Actionable;
 import appeng.api.networking.security.BaseActionSource;
 import appeng.api.storage.data.IAEStack;
 import appeng.me.cache.NetworkMonitor;
-
-import com.folk.aelp.integration.LPVirtualItemSupport;
 
 /**
  * Hard guarantee that an LP virtual projection token can never enter ME network storage.

@@ -3,10 +3,10 @@ package com.folk.aelp.integration;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+import com.folk.aelp.items.ItemLPVirtualStorage;
+
 import appeng.api.storage.data.IAEItemStack;
 import appeng.api.storage.data.IAEStack;
-
-import com.folk.aelp.items.ItemLPVirtualStorage;
 
 /**
  * Type test for the LP virtual projection token.

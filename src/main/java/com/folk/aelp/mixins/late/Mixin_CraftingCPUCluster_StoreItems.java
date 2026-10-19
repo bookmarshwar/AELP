@@ -4,13 +4,13 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+import com.folk.aelp.integration.LPVirtualItemSupport;
+
 import appeng.api.config.Actionable;
 import appeng.api.networking.security.BaseActionSource;
 import appeng.api.storage.IMEMonitor;
 import appeng.api.storage.data.IAEStack;
 import appeng.me.cluster.implementations.CraftingCPUCluster;
-
-import com.folk.aelp.integration.LPVirtualItemSupport;
 
 /**
  * Drops LP virtual projection tokens when a crafting CPU flushes its inventory back to the network.

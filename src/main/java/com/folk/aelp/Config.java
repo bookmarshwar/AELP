@@ -27,8 +27,7 @@ public class Config {
     public static void synchronizeConfiguration(File configFile) {
         Configuration configuration = new Configuration(configFile);
 
-        enabled = configuration
-            .getBoolean("enabled", CATEGORY, enabled, "Enable the LP -> AE bridge block.");
+        enabled = configuration.getBoolean("enabled", CATEGORY, enabled, "Enable the LP -> AE bridge block.");
 
         refreshInterval = configuration.getInt(
             "refreshInterval",
@@ -52,8 +51,11 @@ public class Config {
             .get(CATEGORY, "idlePowerUsage", idlePowerUsage, "AE idle power drain of the bridge block.")
             .getDouble(idlePowerUsage);
 
-        debugLog = configuration
-            .getBoolean("debugLog", CATEGORY, debugLog, "Log LP snapshot changes and requests (spammy, debugging only).");
+        debugLog = configuration.getBoolean(
+            "debugLog",
+            CATEGORY,
+            debugLog,
+            "Log LP snapshot changes and requests (spammy, debugging only).");
 
         patternPriority = configuration.getInt(
             "patternPriority",

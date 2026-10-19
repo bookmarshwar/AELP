@@ -4,13 +4,13 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+import com.folk.aelp.integration.LPVirtualItemSupport;
+
 import appeng.api.config.Actionable;
 import appeng.api.networking.security.BaseActionSource;
 import appeng.api.storage.IMEMonitor;
 import appeng.api.storage.data.IAEStack;
 import appeng.crafting.MECraftingInventory;
-
-import com.folk.aelp.integration.LPVirtualItemSupport;
 
 /**
  * Lets the LP virtual projection tokens satisfy the "commit" step of a crafting job.

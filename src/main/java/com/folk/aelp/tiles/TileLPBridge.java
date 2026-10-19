@@ -17,6 +17,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import com.folk.aelp.AELP;
+import com.folk.aelp.Config;
+import com.folk.aelp.integration.LPBridgeRegistry;
+import com.folk.aelp.integration.LPVirtualInventory;
+import com.folk.aelp.integration.LPVirtualItemSupport;
+import com.folk.aelp.items.ItemLPVirtualStorage;
+import com.folk.aelp.loader.BlocksLoader;
+
 import appeng.api.AEApi;
 import appeng.api.config.AccessRestriction;
 import appeng.api.config.Actionable;
@@ -48,7 +56,6 @@ import appeng.tile.grid.AENetworkTile;
 import appeng.util.IterationCounter;
 import appeng.util.inv.MEInventoryCrafting;
 import appeng.util.item.AEItemStackType;
-
 import logisticspipes.pipes.PipeItemsRequestLogistics;
 import logisticspipes.pipes.basic.CoreUnroutedPipe;
 import logisticspipes.pipes.basic.LogisticsBlockGenericPipe;
@@ -57,14 +64,6 @@ import logisticspipes.request.RequestTree.ActiveRequestType;
 import logisticspipes.utils.item.ItemIdentifier;
 import logisticspipes.utils.item.ItemIdentifierStack;
 import logisticspipes.utils.tuples.Pair;
-
-import com.folk.aelp.AELP;
-import com.folk.aelp.Config;
-import com.folk.aelp.integration.LPBridgeRegistry;
-import com.folk.aelp.integration.LPVirtualInventory;
-import com.folk.aelp.integration.LPVirtualItemSupport;
-import com.folk.aelp.items.ItemLPVirtualStorage;
-import com.folk.aelp.loader.BlocksLoader;
 
 /**
  * Bridges one LP network into one ME network.
@@ -234,16 +233,8 @@ public class TileLPBridge extends AENetworkTile implements ICellContainer, ICraf
         }
         try {
             ItemIdentifierStack request = identifier.makeStack((int) amount);
-            int promised = RequestTree.request(
-                request,
-                pipe,
-                null,
-                false,
-                false,
-                false,
-                false,
-                EnumSet.of(ActiveRequestType.Provide),
-                null);
+            int promised = RequestTree
+                .request(request, pipe, null, false, false, false, false, EnumSet.of(ActiveRequestType.Provide), null);
             if (promised == amount) {
                 if (Config.debugLog) {
                     AELP.LOG.info(
@@ -257,8 +248,11 @@ public class TileLPBridge extends AENetworkTile implements ICellContainer, ICraf
                 return true;
             }
             if (Config.debugLog) {
-                AELP.LOG
-                    .info("AELP: LP could only promise {} of {} for {}", promised, amount, identifier.getFriendlyName());
+                AELP.LOG.info(
+                    "AELP: LP could only promise {} of {} for {}",
+                    promised,
+                    amount,
+                    identifier.getFriendlyName());
             }
             return false;
         } catch (Exception e) {
