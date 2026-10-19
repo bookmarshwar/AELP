@@ -8,7 +8,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import com.folk.aelp.tiles.TileLPBridge;
@@ -26,18 +25,17 @@ import cpw.mods.fml.relauncher.SideOnly;
  * The look is the ME Interface with a yellow frame, so players read it as "an interface, LP flavored"
  * at a glance. AE already ships that exact texture as a dyed interface variant, so it is reused
  * directly instead of duplicating assets.
+ * <p>
+ * All six faces use the same texture on purpose: the bridge has no facing direction — LP items come in
+ * through the request pipe and leave through the ME network, independent of which side they touch.
  */
 public class BlockLPBridge extends BlockContainer {
 
-    /** Yellow-framed ME Interface face, used for the four sides. */
-    private static final String TEXTURE_SIDE = "appliedenergistics2:interface/BlockInterface_Yellow";
-    /** Yellow-framed ME Interface face including the direction arrow, used for the front. */
-    private static final String TEXTURE_FRONT = "appliedenergistics2:interface/BlockInterfaceAlternateArrow_Yellow";
+    /** Yellow-framed ME Interface face, used on every side. */
+    private static final String TEXTURE = "appliedenergistics2:interface/BlockInterface_Yellow";
 
     @SideOnly(Side.CLIENT)
-    private IIcon sideIcon;
-    @SideOnly(Side.CLIENT)
-    private IIcon frontIcon;
+    private IIcon icon;
 
     public BlockLPBridge() {
         super(Material.iron);
@@ -55,36 +53,20 @@ public class BlockLPBridge extends BlockContainer {
     }
 
     // ------------------------------------------------------------------
-    // rendering: reuse AE's dyed interface textures
+    // rendering: reuse AE's dyed interface texture on all faces
     // ------------------------------------------------------------------
 
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister register) {
-        this.sideIcon = register.registerIcon(TEXTURE_SIDE);
-        this.frontIcon = register.registerIcon(TEXTURE_FRONT);
-        this.blockIcon = this.sideIcon;
+        this.icon = register.registerIcon(TEXTURE);
+        this.blockIcon = this.icon;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta) {
-        // Item rendering / unplaced blocks: treat "north" as the front.
-        return side == 3 ? this.frontIcon : this.sideIcon;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
-        int facing = world.getBlockMetadata(x, y, z) & 7;
-        return side == facing ? this.frontIcon : this.sideIcon;
-    }
-
-    @Override
-    public int onBlockPlaced(World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ,
-        int metadata) {
-        // The face you click becomes the front, so the arrow always points at the player.
-        return side;
+        return this.icon;
     }
 
     // ------------------------------------------------------------------
