@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__zread__search_doc",
+      "mcp__zread__get_repo_structure",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:lab.teamblackcrystal.com)",
+      "WebFetch(domain:deepwiki.com)",
+      "WebFetch(domain:raw.githubusercontent.com)"
+    ]
+  }
+}
