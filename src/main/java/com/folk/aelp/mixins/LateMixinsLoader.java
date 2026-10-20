@@ -18,7 +18,7 @@ public class LateMixinsLoader implements ILateMixinLoader {
     @Override
     public String getMixinConfig() {
         // the .json file must exist under src/main/resources with a matching package and refmap
-        return "mixins.aelp.late.json";
+        return "mixins.lpae.late.json";
     }
 
     @Nonnull

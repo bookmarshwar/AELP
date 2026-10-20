@@ -21,6 +21,14 @@ import cpw.mods.fml.common.event.FMLServerStoppedEvent;
  * <p>
  * Exposes the LP stock to AE as a read-only virtual projection, turns it into auto-crafting targets
  * through generated patterns, and lets the physical LP deliveries flow back into the ME network.
+ * <p>
+ * <b>Registration happens in {@code postInit}, and that is deliberate.</b> Registering blocks and items
+ * shifts the numeric ids the global registries hand out for everything registered afterwards. A mod
+ * that resolves ore dictionary entries or item references during its own {@code init} can then bake a
+ * broken ingredient list into a recipe - in practice a Thaumcraft arcane recipe that existed but never
+ * matched anything, plus a crash when its research page was drawn. Doing it in {@code postInit} means
+ * every other mod has finished initialising before our ids exist, so nothing can observe them mid-flight
+ * regardless of what this mod is called or where it lands in the load order.
  */
 @Mod(
     modid = AELP.MODID,
@@ -30,7 +38,7 @@ import cpw.mods.fml.common.event.FMLServerStoppedEvent;
     dependencies = "required-after:appliedenergistics2;required-after:LogisticsPipes")
 public class AELP {
 
-    public static final String MODID = "aelp";
+    public static final String MODID = "lpae";
     public static final String MODNAME = "AE-LP Bridge";
 
     public static final Logger LOG = LogManager.getLogger(MODID);
@@ -53,6 +61,8 @@ public class AELP {
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         proxy.postInit(event);
+        // Registered here, not in preInit: see the class javadoc.
+
     }
 
     @Mod.EventHandler
