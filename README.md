@@ -50,6 +50,4 @@ AELP 的做法是：
 - Applied Energistics 2 (GTNH Unofficial)
 - Logistics Pipes (GTNH)
 
-## 设计文档
 
-完整方案见 [docs/lp-ae-bridge.md](docs/lp-ae-bridge.md)。
