@@ -24,6 +24,7 @@ import com.folk.aelp.integration.LPVirtualInventory;
 import com.folk.aelp.integration.LPVirtualItemSupport;
 import com.folk.aelp.items.ItemLPVirtualStorage;
 import com.folk.aelp.loader.BlocksLoader;
+import com.folk.aelp.loader.ItemsLoader;
 
 import appeng.api.AEApi;
 import appeng.api.config.AccessRestriction;
@@ -656,7 +657,7 @@ public class TileLPBridge extends AENetworkTile implements ICellContainer, ICraf
             if (real == null) {
                 continue;
             }
-            ItemStack virtual = BlocksLoader.LP_VIRTUAL_STORAGE.create(real);
+            ItemStack virtual = ItemsLoader.LP_VIRTUAL_STORAGE.create(real);
             if (virtual == null) {
                 continue;
             }

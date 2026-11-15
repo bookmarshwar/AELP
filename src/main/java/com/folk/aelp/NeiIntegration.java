@@ -2,7 +2,7 @@ package com.folk.aelp;
 
 import net.minecraft.item.ItemStack;
 
-import com.folk.aelp.loader.BlocksLoader;
+import com.folk.aelp.loader.ItemsLoader;
 
 import codechicken.nei.api.API;
 import cpw.mods.fml.relauncher.Side;
@@ -18,6 +18,6 @@ final class NeiIntegration {
     private NeiIntegration() {}
 
     static void hideVirtualItem() {
-        API.hideItem(new ItemStack(BlocksLoader.LP_VIRTUAL_STORAGE, 1, 0));
+        API.hideItem(new ItemStack(ItemsLoader.LP_VIRTUAL_STORAGE, 1, 0));
     }
 }

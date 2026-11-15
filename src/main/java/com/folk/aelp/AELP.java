@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.folk.aelp.integration.LPBridgeRegistry;
 import com.folk.aelp.loader.BlocksLoader;
+import com.folk.aelp.loader.ItemsLoader;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
@@ -22,13 +23,12 @@ import cpw.mods.fml.common.event.FMLServerStoppedEvent;
  * Exposes the LP stock to AE as a read-only virtual projection, turns it into auto-crafting targets
  * through generated patterns, and lets the physical LP deliveries flow back into the ME network.
  * <p>
- * <b>Registration happens in {@code postInit}, and that is deliberate.</b> Registering blocks and items
- * shifts the numeric ids the global registries hand out for everything registered afterwards. A mod
- * that resolves ore dictionary entries or item references during its own {@code init} can then bake a
- * broken ingredient list into a recipe - in practice a Thaumcraft arcane recipe that existed but never
- * matched anything, plus a crash when its research page was drawn. Doing it in {@code postInit} means
- * every other mod has finished initialising before our ids exist, so nothing can observe them mid-flight
- * regardless of what this mod is called or where it lands in the load order.
+ * <b>Registration order matters.</b> Registering blocks and items shifts the numeric ids the global
+ * registries hand out for everything registered afterwards. A mod that resolves ore dictionary entries
+ * or item references during its own {@code init} can then bake a broken ingredient list into a recipe -
+ * in practice a Thaumcraft arcane recipe that existed but never matched anything, plus a crash when its
+ * research page was drawn. Keeping this mod's id late in the load order (and registering from
+ * {@code preInit} like every other mod) keeps it out of that race.
  */
 @Mod(
     modid = AELP.MODID,
@@ -49,7 +49,8 @@ public class AELP {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         proxy.preInit(event);
-        new BlocksLoader(event);
+        BlocksLoader.init(event);
+        ItemsLoader.init(event);
     }
 
     @Mod.EventHandler
@@ -61,8 +62,6 @@ public class AELP {
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         proxy.postInit(event);
-        // Registered here, not in preInit: see the class javadoc.
-
     }
 
     @Mod.EventHandler

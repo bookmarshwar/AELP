@@ -2,7 +2,7 @@ package com.folk.aelp.integration;
 
 import net.minecraft.item.ItemStack;
 
-import com.folk.aelp.loader.BlocksLoader;
+import com.folk.aelp.loader.ItemsLoader;
 import com.folk.aelp.tiles.TileLPBridge;
 
 import appeng.api.AEApi;
@@ -148,7 +148,7 @@ public final class LPVirtualInventory implements IMEInventoryHandler<IAEItemStac
         if (real == null || amount <= 0) {
             return null;
         }
-        ItemStack virtual = BlocksLoader.LP_VIRTUAL_STORAGE.create(real);
+        ItemStack virtual = ItemsLoader.LP_VIRTUAL_STORAGE.create(real);
         if (virtual == null) {
             return null;
         }
